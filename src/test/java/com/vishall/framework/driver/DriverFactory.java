@@ -10,6 +10,7 @@ import java.time.Duration;
 
 public class DriverFactory {
 
+    //ThreadLocal object of type WebDriver
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     //creates new browser instance
