@@ -10,14 +10,15 @@ public class BaseTest {
     //create browser for current test thread
     public void setup(){
         //initializes the requested browser
+        //sends the browser name to DriverFactory class from config.properties file
         DriverFactory.initialize_driver(ConfigReader.getProp("browser"));
+
         //opens url
         DriverFactory.getDriver().get(ConfigReader.getProp("url"));
     }
 
     @AfterMethod
     public void tearDown(){
-        DriverFactory.quitDriver();
-
+        //DriverFactory.quitDriver();
     }
 }

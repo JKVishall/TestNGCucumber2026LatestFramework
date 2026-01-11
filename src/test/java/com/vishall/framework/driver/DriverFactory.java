@@ -16,10 +16,12 @@ public class DriverFactory {
     //creates new browser instance
     public static void initialize_driver(String browser){
 
+        //if browser value from config.properties file is null, then throw the below exception.
         if (browser==null || browser.isBlank()){
             throw new RuntimeException("Browser value is missing");
         }
 
+        //if driver object's value is null, only then assign a browser to it.
         if(driver.get()==null){
             switch(browser.toLowerCase()){
                 case "chrome":
@@ -39,6 +41,7 @@ public class DriverFactory {
     }
 
     //returns the WebDriver instance for the current thread
+    //called in BaseTest before every @Test method execution starts
     public static WebDriver getDriver(){
         if(driver.get()==null){
             throw new IllegalStateException("Driver not initialized");
@@ -47,6 +50,7 @@ public class DriverFactory {
     }
 
     //closes the browser
+    //called in BaseTest after every @Test method execution is completed
     public static void quitDriver(){
         if (driver.get()!=null){
             driver.get().quit();
@@ -66,5 +70,4 @@ public class DriverFactory {
     private static WebDriver createFireFoxDriver(){
         return new FirefoxDriver();
     }
-
 }
