@@ -33,7 +33,7 @@ public class BasePage {
         }
     }
 
-    //click on an element using Actions class
+    //click on an element using Actions class's moveToElement(find(locator)).click() action
     protected void clickUsingActions(By locator){
         new Actions(DriverFactory.getDriver()).moveToElement(find(locator))
                 .pause(Duration.ofMillis(300))
@@ -46,12 +46,24 @@ public class BasePage {
         find(locator).sendKeys(Keys.ENTER);
     }
 
+    //custom built method
+    //click on an element using
+    protected void clickUsingBrandName(String brandName){
+        By brandNameElement = By.xpath("//a[.//img[contains(@src,'"+brandName+"')]]");
+        click(brandNameElement);
+    }
+
     //sendkeys
     protected void type(By locator, String text){
         WebElement element = find(locator);
         element.clear();
         element.sendKeys(text);
     }
+
+
+
+
+
 
     //return the text of an element
     protected String getText(By locator){

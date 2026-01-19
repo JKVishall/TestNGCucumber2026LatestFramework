@@ -21,9 +21,11 @@ public class WomensFashionNav extends BasePage {
         //scrollTo(womensClothing);
         //click(womensClothing);
         clickUsingActions(womensClothing);
+        //clickUsingEnter(womensClothing);
 
        // scrollTo(womensFashion);
        // click(womensFashion);
+        //clickUsingActions(womensFashion);
          clickUsingEnter(womensFashion);
     }
 }
