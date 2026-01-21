@@ -7,10 +7,11 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
+import java.util.List;
 
 public class WaitUtils {
 
-    public static final Duration TIMEOUT = Duration.ofSeconds(10);
+    public static final Duration TIMEOUT = Duration.ofSeconds(15);
 
     //Generic wait -- can be used for all wait types
     public static <T> T waitFor(ExpectedCondition<T> condition){
@@ -22,6 +23,10 @@ public class WaitUtils {
     //for rarer waits, we can call the wait using the waitFor method itself directly in POM class
     public static WebElement waitForVisibility(By locator){
         return waitFor(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public static List<WebElement> waitForVisibilityOfAllElements(By locator){
+        return waitFor(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
     }
 
     public static WebElement waitForClickability(By locator){

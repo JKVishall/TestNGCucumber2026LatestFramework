@@ -7,14 +7,23 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class BasePage {
 
    //find element and return it as WebElement
     protected WebElement find(By locator){
         return WaitUtils.waitForVisibility(locator);
+    }
+
+    //find elements ie.,List<WebElement>
+    protected List<WebElement> findElements(By locator){
+        return WaitUtils.waitForVisibilityOfAllElements(locator);
     }
 
     //find() is a method in BasePage which finds a WebElement and stores it.
@@ -53,17 +62,19 @@ public class BasePage {
         click(brandNameElement);
     }
 
+    //custom built method
+    //
+    protected void clickUsingProductName(String productName){
+        By productNameElement = By.xpath("//a[.//h2[@aria-label='"+productName+"']]");
+        click(productNameElement);
+    }
+
     //sendkeys
     protected void type(By locator, String text){
         WebElement element = find(locator);
         element.clear();
         element.sendKeys(text);
     }
-
-
-
-
-
 
     //return the text of an element
     protected String getText(By locator){
@@ -84,5 +95,59 @@ public class BasePage {
         new Actions(DriverFactory.getDriver()).moveToElement(find(locator))
                 .pause(Duration.ofMillis(300))
                 .perform();
+    }
+
+    //select dropdown
+    Select select;
+    protected void selectByVisibleText(By locator, String keyText){
+        select = new Select(find(locator));
+        select.selectByVisibleText(keyText);
+    }
+
+    protected void selectByIndex(By locator){
+        select = new Select(find(locator));
+        List<WebElement> numOfProductsAvailable = select.getOptions();
+        int productCount = numOfProductsAvailable.size();
+
+        //selecting maximum number of products
+        //using -1 since indexing will be from 0, unlike .size() which counts from 1
+        select.selectByIndex(productCount-1);
+
+       DriverFactory.getDriver().findElement(By.tagName("body")).click();
+    }
+
+    //get window handles and switch to specific window
+    protected void switchToSpecificWindow(String expectedWindowTitle){
+        String currentWindow = DriverFactory.getDriver().getWindowHandle();
+        String parentWindowTitle = DriverFactory.getDriver().getTitle();
+
+        Set<String> allWindows = DriverFactory.getDriver().getWindowHandles();
+
+        List<String> windowsNames = new ArrayList<>();
+        for (String k: allWindows){
+            windowsNames.add(k);
+        }
+        for (String a: allWindows) {
+            //if(!a.equals(currentWindow))
+            String currentWindowTitle = DriverFactory.getDriver().getTitle();
+            if (currentWindowTitle.equals(expectedWindowTitle)){
+                DriverFactory.getDriver().switchTo().window(currentWindowTitle);
+            }
+        }
+    }
+
+    //get window handles and switch to specific window
+    protected void switchToSecondWindow() {
+        Set<String> allWindows = DriverFactory.getDriver().getWindowHandles();
+
+        List<String> windowsNames = new ArrayList<>();
+        for (String k: allWindows){
+            windowsNames.add(k);
+        }
+        DriverFactory.getDriver().switchTo().window(windowsNames.get(1));
+    }
+
+    protected void goToCartBtnUniversal(){
+        click(By.id("nav-cart"));
     }
 }
