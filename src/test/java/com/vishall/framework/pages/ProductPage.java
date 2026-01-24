@@ -17,8 +17,8 @@ public class ProductPage extends BasePage {
 
     public void addToCart(){
         switchToSecondWindow();
-        WebElement a = DriverFactory.getDriver().findElement(By.id("productTitle"));
-        System.out.println(a.getText());
+        //WebElement a = DriverFactory.getDriver().findElement(By.id("productTitle"));
+        //System.out.println(a.getText());
         selectByIndex(quantityElement);
         click(addToCartBtn);
     }

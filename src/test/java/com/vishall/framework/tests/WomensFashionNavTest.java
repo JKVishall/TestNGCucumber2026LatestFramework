@@ -2,7 +2,9 @@ package com.vishall.framework.tests;
 
 import com.vishall.framework.base.BasePage;
 import com.vishall.framework.base.BaseTest;
+import com.vishall.framework.driver.DriverFactory;
 import com.vishall.framework.pages.*;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class WomensFashionNavTest extends BaseTest {
@@ -10,8 +12,8 @@ public class WomensFashionNavTest extends BaseTest {
     WomensFashionNav womensFashion;
     WomensFashionPage clickBrandName;
     SwarovskiBrandPage choosingProduct;
-    ProductPage productPage;
-    Cart cart;
+    ProductPage productPage = new ProductPage();
+    Cart cart = new Cart();
 
 
 //    @Test
@@ -21,7 +23,7 @@ public class WomensFashionNavTest extends BaseTest {
 //    }
 
     @Test
-    public void clickBrandNameinWomensFashion(){
+    public void addMaxCountOfProductToCart(){
         womensFashion = new WomensFashionNav();
         womensFashion.navToWomensFashion();
 
@@ -32,12 +34,15 @@ public class WomensFashionNavTest extends BaseTest {
         choosingProduct.sortThePage();
         choosingProduct.clickOnProductName();
 
-        productPage = new ProductPage();
         productPage.addToCart();
         productPage.goToCart();
 
-        cart = new Cart();
-        cart.SeeMoreLikeThisBtn();
+        cart.productAddedOrNot();
+    }
 
+    @Test(dependsOnMethods = "addMaxCountOfProductToCart")
+    public void moreLikeThisButtonInCartPage(){
+        productPage.goToCart();
+        cart.SeeMoreLikeThisBtn();
     }
 }
