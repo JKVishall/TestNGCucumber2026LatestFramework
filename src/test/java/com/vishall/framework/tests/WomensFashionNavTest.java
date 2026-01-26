@@ -4,6 +4,8 @@ import com.vishall.framework.base.BasePage;
 import com.vishall.framework.base.BaseTest;
 import com.vishall.framework.driver.DriverFactory;
 import com.vishall.framework.pages.*;
+import com.vishall.framework.utils.LoggersUtil;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -15,16 +17,13 @@ public class WomensFashionNavTest extends BaseTest {
     ProductPage productPage = new ProductPage();
     Cart cart = new Cart();
 
-
-//    @Test
-//    public void clickWomensFashionSection(){
-//        womensFashion = new WomensFashionNav();
-//        womensFashion.navToWomensFashion();
-//    }
+    //Logger
+    private static final Logger log= LoggersUtil.getLogger(WomensFashionNavTest.class);
 
     @Test
     public void addMaxCountOfProductToCart(){
         womensFashion = new WomensFashionNav();
+        log.info("Navigating to women's fashion page");
         womensFashion.navToWomensFashion();
 
         clickBrandName = new WomensFashionPage();
@@ -41,8 +40,11 @@ public class WomensFashionNavTest extends BaseTest {
     }
 
     @Test(dependsOnMethods = "addMaxCountOfProductToCart")
-    public void moreLikeThisButtonInCartPage(){
+    public void moreLikeThisButtonInCartPage() throws InterruptedException {
         productPage.goToCart();
+        log.info("Clicking on see more like this button and then waiting for see more like this menu to load fully inorder to take a better SS");
         cart.SeeMoreLikeThisBtn();
+
+
     }
 }

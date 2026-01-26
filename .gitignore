@@ -40,3 +40,4 @@ build/
 logs/
 test-output/
 allure-results/
+/screenshots/

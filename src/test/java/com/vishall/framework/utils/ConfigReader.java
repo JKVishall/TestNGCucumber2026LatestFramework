@@ -11,7 +11,7 @@ public class ConfigReader {
 
     static{
         try{
-            FileInputStream input = new FileInputStream("src/test/java/com/vishall/framework/resources/config.properties");
+            FileInputStream input = new FileInputStream("src/test/resources/config.properties");
             prop = new Properties();
             prop.load(input);
             input.close();

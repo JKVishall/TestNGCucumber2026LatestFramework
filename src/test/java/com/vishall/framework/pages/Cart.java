@@ -1,6 +1,7 @@
 package com.vishall.framework.pages;
 
 import com.vishall.framework.base.BasePage;
+import com.vishall.framework.utils.WaitUtils;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
@@ -10,12 +11,14 @@ public class Cart extends BasePage {
 
     By addedProductName = By.linkText("Swarovski Iconic Swan Bangle, Swan, Black, Rose Gold-Tone Plated");
     By seeMoreLikeThis = By.xpath("//input[contains(@name,'submit.compare')]");
+    By seeMoreLikeThisMenuLoaded = By.xpath("//h1[contains(normalize-space(), 'More items like this')]");
 
 
     public void productAddedOrNot(){
         Assert.assertEquals(find(addedProductName).getText(), "Swarovski Iconic Swan Bangle, Swan, Black, Rose Gold-Tone Plated");
     }
-    public void SeeMoreLikeThisBtn(){
+    public void SeeMoreLikeThisBtn() throws InterruptedException {
         click(seeMoreLikeThis);
+        WaitUtils.waitForVisibility(seeMoreLikeThisMenuLoaded);
     }
 }
