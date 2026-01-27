@@ -1,15 +1,13 @@
 package com.vishall.framework.driver;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import com.vishall.framework.utils.ConfigReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.io.File;
 import java.time.Duration;
 
 public class DriverFactory {
@@ -25,17 +23,20 @@ public class DriverFactory {
             throw new RuntimeException("Browser value is missing");
         }
 
+        //read headless or not from ConfigReader class
+        boolean headless = Boolean.parseBoolean(ConfigReader.getProp("headless"));
+
         //if driver object's value is null, only then assign a browser to it.
         if(driver.get()==null){
             switch(browser.toLowerCase()){
                 case "chrome":
-                    driver.set(createChromeDriver());
+                    driver.set(createChromeDriver(headless));
                     break;
                 case "edge":
-                    driver.set(createEdgeDriver());
+                    driver.set(createEdgeDriver(headless));
                     break;
                 case "firefox":
-                    driver.set(createFireFoxDriver());
+                    driver.set(createFireFoxDriver(headless));
                     break;
                 default:
                     throw new IllegalArgumentException("Unsupported browser name: "+browser);
@@ -63,15 +64,32 @@ public class DriverFactory {
     }
 
 
-    private static WebDriver createChromeDriver(){
+    private static WebDriver createChromeDriver(boolean headless){
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--start-maximized");
+
+        if(headless){
+           options.addArguments("--headless=new");
+            options.addArguments("--disable-gpu");
+           options.addArguments("--window-size=1920,1080");
+        }
+        else {
+            options.addArguments("--start-maximized");
+        }
         return new ChromeDriver(options);
     }
-    private static WebDriver createEdgeDriver(){
-        return new EdgeDriver();
+    private static WebDriver createEdgeDriver(boolean headless){
+        EdgeOptions options = new EdgeOptions();
+        if(headless){
+            options.addArguments("--headless=new");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--window-size=1920,1080");
+        }
+        else {
+            options.addArguments("start-maximized");
+        }
+        return new EdgeDriver(options);
     }
-    private static WebDriver createFireFoxDriver(){
+    private static WebDriver createFireFoxDriver(boolean headless){
         return new FirefoxDriver();
     }
 }
