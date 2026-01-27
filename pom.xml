@@ -145,4 +145,24 @@
         </plugin>
     </plugins>
   </build>
+
+    <profiles>
+        <profile>
+            <id>smoke</id>
+            <properties>
+                    <suiteXmlFile>testng-smoke.xml</suiteXmlFile>
+            </properties>
+            <!-- activation helps in setting a default profile which should run with mvn clean test command
+            No, -P or -D is required -->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>regression</id>
+            <properties>
+                    <suiteXmlFile>testng-regression.xml</suiteXmlFile>
+            </properties>
+        </profile>
+    </profiles>
 </project>
