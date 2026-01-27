@@ -144,7 +144,8 @@ public class BasePage {
         for (String k: allWindows){
             windowsNames.add(k);
         }
-        DriverFactory.getDriver().switchTo().window(windowsNames.get(1));
+        int windowsCount = windowsNames.size();
+        DriverFactory.getDriver().switchTo().window(windowsNames.get(windowsCount-1));
     }
 
     protected void goToCartBtnUniversal(){
