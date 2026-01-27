@@ -18,7 +18,7 @@ public class BaseTest {
         DriverFactory.initialize_driver(ConfigReader.getProp("browser"));
 
         //opens url
-        DriverFactory.getDriver().get(ConfigReader.getProp("url"));
+        DriverFactory.getDriver().get(ConfigReader.getUrl());
 
     }
 

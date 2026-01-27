@@ -45,6 +45,25 @@ public class ConfigReader {
         return getDefaultValue(key);
     }
 
+    public static String getUrl(){
+        String env = getProp("env");
+        String urlKey = env+".url";
+
+        //getting url from CLI and setting it
+        String url = System.getProperty(urlKey);
+
+        //if CLI did not send URL,then we check in properties file
+        if(url==null||url.isBlank()){
+            url=prop.getProperty(urlKey);
+        }
+
+        //if it's still blank
+        if(url==null||url.isBlank()){
+            throw new RuntimeException("URL not configured for env: "+env);
+        }
+        return url;
+    }
+
     private static String getDefaultValue(String key){
         return switch(key){
             case "browser" -> "chrome";
