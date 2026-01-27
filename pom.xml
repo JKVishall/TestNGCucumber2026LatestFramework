@@ -18,7 +18,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
-      <version>4.25.0</version>
+      <version>4.35.0</version>
         <exclusions>
             <exclusion>
                 <groupId>org.slf4j</groupId>
@@ -127,8 +127,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>11</source>
-          <target>11</target>
+          <source>14</source>
+          <target>14</target>
         </configuration>
       </plugin>
         <!-- SureFire plugin for TestNG and Cucumber -->
