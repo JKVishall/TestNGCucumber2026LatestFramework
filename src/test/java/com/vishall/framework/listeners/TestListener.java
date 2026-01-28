@@ -34,21 +34,21 @@ public class TestListener implements ITestListener {
     @Override
     public void onTestSuccess(ITestResult result){
         String testName = result.getMethod().getMethodName();
-        log.info("Test passed: {}", testName);
+
         ScreenShotUtil.takeScreenshot(result);
+        log.info("Test passed: {}", testName);
     }
 
     @Override
     public void onTestFailure(ITestResult result){
         String testName = result.getMethod().getMethodName();
 
+        ScreenShotUtil.takeScreenshot(result);
         log.error("Test failed: {}", testName);
 
         if (result.getThrowable() != null){
             log.error("Failure reason:", result.getThrowable());
         }
-
-        ScreenShotUtil.takeScreenshot(result);
     }
 
     @Override

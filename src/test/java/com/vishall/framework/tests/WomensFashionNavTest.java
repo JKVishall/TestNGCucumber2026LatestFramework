@@ -17,7 +17,7 @@ public class WomensFashionNavTest extends BaseTest {
     ProductPage productPage; //= new ProductPage();
     Cart cart; //= new Cart();
 
-    //Logger
+    //Logger calling & creation for this class
     private static final Logger log= LoggersUtil.getLogger(WomensFashionNavTest.class);
 
     @Test
@@ -62,7 +62,6 @@ public class WomensFashionNavTest extends BaseTest {
         cart = new Cart();
         log.info("Clicking on see more like this button and then waiting for see more like this menu to load fully inorder to take a better SS");
         cart.SeeMoreLikeThisBtn();
-
 
     }
 }
