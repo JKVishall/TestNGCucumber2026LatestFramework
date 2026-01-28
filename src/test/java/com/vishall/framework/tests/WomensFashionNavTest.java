@@ -4,10 +4,15 @@ import com.vishall.framework.base.BasePage;
 import com.vishall.framework.base.BaseTest;
 import com.vishall.framework.driver.DriverFactory;
 import com.vishall.framework.pages.*;
+import com.vishall.framework.utils.DataProviderJson;
 import com.vishall.framework.utils.LoggersUtil;
 import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import javax.xml.crypto.Data;
+import java.util.HashMap;
 
 public class WomensFashionNavTest extends BaseTest {
 
@@ -20,8 +25,16 @@ public class WomensFashionNavTest extends BaseTest {
     //Logger calling & creation for this class
     private static final Logger log= LoggersUtil.getLogger(WomensFashionNavTest.class);
 
-    @Test
-    public void addMaxCountOfProductToCart(){
+
+    @DataProvider(name = "testDataForWomensFashionNavTest")
+    public Object[][] dp() throws Exception {
+        // Important: include the leading slash if you concatenated with user.dir
+        return DataProviderJson.jsonforHashMapCOnversionTestNG("");
+    }
+
+
+    @Test(dataProvider="testDataForWomensFashionNavTest")
+    public void addMaxCountOfProductToCart(HashMap<String, String> data){
         womensFashion = new WomensFashionNav();
         log.info("Navigating to women's fashion page");
         womensFashion.navToWomensFashion();
