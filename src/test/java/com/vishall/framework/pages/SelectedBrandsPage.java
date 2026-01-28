@@ -3,7 +3,7 @@ package com.vishall.framework.pages;
 import com.vishall.framework.base.BasePage;
 import org.openqa.selenium.By;
 
-public class SwarovskiBrandPage extends BasePage {
+public class SelectedBrandsPage extends BasePage {
     By sortByMenu = By.xpath("//select[@name='s']");
 
     public void sortThePage(){

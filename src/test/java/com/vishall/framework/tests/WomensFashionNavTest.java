@@ -1,24 +1,20 @@
 package com.vishall.framework.tests;
 
-import com.vishall.framework.base.BasePage;
 import com.vishall.framework.base.BaseTest;
-import com.vishall.framework.driver.DriverFactory;
 import com.vishall.framework.pages.*;
 import com.vishall.framework.utils.DataProviderJson;
 import com.vishall.framework.utils.LoggersUtil;
 import org.apache.logging.log4j.Logger;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import javax.xml.crypto.Data;
 import java.util.HashMap;
 
 public class WomensFashionNavTest extends BaseTest {
 
     WomensFashionNav womensFashion;
     WomensFashionPage clickBrandName;
-    SwarovskiBrandPage choosingProduct;
+    SelectedBrandsPage choosingProduct;
     ProductPage productPage; //= new ProductPage();
     Cart cart; //= new Cart();
 
@@ -29,7 +25,7 @@ public class WomensFashionNavTest extends BaseTest {
     @DataProvider(name = "testDataForWomensFashionNavTest")
     public Object[][] dp() throws Exception {
         // Important: include the leading slash if you concatenated with user.dir
-        return DataProviderJson.jsonforHashMapCOnversionTestNG("");
+        return DataProviderJson.jsonforHashMapCOnversionTestNG("/src/test/resources/WomensFashionNavTestData.json");
     }
 
 
@@ -37,12 +33,12 @@ public class WomensFashionNavTest extends BaseTest {
     public void addMaxCountOfProductToCart(HashMap<String, String> data){
         womensFashion = new WomensFashionNav();
         log.info("Navigating to women's fashion page");
-        womensFashion.navToWomensFashion();
+        womensFashion.navToWomensFashion(data.get("FashionToSelect"));
 
         clickBrandName = new WomensFashionPage();
-        clickBrandName.selectBrand("Swarovski");
+        clickBrandName.selectBrand(data.get("BrandName"));
 
-        choosingProduct = new SwarovskiBrandPage();
+        choosingProduct = new SelectedBrandsPage();
         choosingProduct.sortThePage();
         choosingProduct.clickOnProductName();
 
@@ -54,17 +50,17 @@ public class WomensFashionNavTest extends BaseTest {
         cart.productAddedOrNot();
     }
 
-    @Test
-    public void moreLikeThisButtonInCartPage() throws InterruptedException {
+    @Test(dataProvider = "testDataForWomensFashionNavTest")
+    public void moreLikeThisButtonInCartPage(HashMap<String,String> data) throws InterruptedException {
 
         womensFashion = new WomensFashionNav();
         log.info("Navigating to women's fashion page");
-        womensFashion.navToWomensFashion();
+        womensFashion.navToWomensFashion(data.get("FashionToSelect"));
 
         clickBrandName = new WomensFashionPage();
-        clickBrandName.selectBrand("Swarovski");
+        clickBrandName.selectBrand(data.get("BrandName"));
 
-        choosingProduct = new SwarovskiBrandPage();
+        choosingProduct = new SelectedBrandsPage();
         choosingProduct.sortThePage();
         choosingProduct.clickOnProductName();
 
