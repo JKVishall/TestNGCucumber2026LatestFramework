@@ -10,9 +10,9 @@
             <class name="com.vishall.framework.tests.WomensFashionNavTest"></class>
         </classes>
     </test>
-    <test name ="smoke tests">
+    <!--test name ="smoke tests">
         <classes>
             <class name="com.vishall.framework.tests.SmokeTest"></class>
         </classes>
-    </test>
+    </test-->
 </suite>

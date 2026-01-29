@@ -5,6 +5,7 @@ import com.vishall.framework.pages.*;
 import com.vishall.framework.utils.DataProviderJson;
 import com.vishall.framework.utils.LoggersUtil;
 import org.apache.logging.log4j.Logger;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -40,14 +41,22 @@ public class WomensFashionNavTest extends BaseTest {
 
         choosingProduct = new SelectedBrandsPage();
         choosingProduct.sortThePage();
-        choosingProduct.clickOnProductName();
+        choosingProduct.clickOnProductName(data.get("ProductName"));
 
         productPage = new ProductPage();
         productPage.addToCart();
         productPage.goToCart();
 
         cart = new Cart();
-        cart.productAddedOrNot();
+        log.info("Doing assert to confirm if selected product is added");
+
+        String expectedName = data.get("ProductName");
+        String productNameRetrieved = cart.productAddedOrNot(expectedName);
+
+        log.info("Actual result:" + productNameRetrieved);
+        log.info("Expected result" + expectedName);
+
+        Assert.assertTrue(productNameRetrieved.contains(expectedName), "Expected product is not present.\nExpected to contain: " + expectedName + "\nActual: " + productNameRetrieved);
     }
 
     @Test(dataProvider = "testDataForWomensFashionNavTest")
@@ -62,7 +71,7 @@ public class WomensFashionNavTest extends BaseTest {
 
         choosingProduct = new SelectedBrandsPage();
         choosingProduct.sortThePage();
-        choosingProduct.clickOnProductName();
+        choosingProduct.clickOnProductName(data.get("ProductName"));
 
         productPage = new ProductPage();
         productPage.addToCart();
@@ -71,6 +80,5 @@ public class WomensFashionNavTest extends BaseTest {
         cart = new Cart();
         log.info("Clicking on see more like this button and then waiting for see more like this menu to load fully inorder to take a better SS");
         cart.SeeMoreLikeThisBtn();
-
     }
 }
