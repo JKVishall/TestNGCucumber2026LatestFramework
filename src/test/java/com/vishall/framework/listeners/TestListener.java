@@ -24,21 +24,25 @@ public class TestListener implements ITestListener {
     //Logger instance
     private static final Logger log = LoggersUtil.getLogger(TestListener.class);
     //ExtentReports instance
-    private static ExtentReports extent = ExtentManager.getInstance();
+    private static final ExtentReports extent = ExtentManager.getInstance();
 
 
     @Override
     public void onStart(ITestContext context){
+       // ExtentTestManager.getTest().info("Suite started: "+context.getName());
+
         log.info("Suite started: {}", context.getName());
     }
 
     @Override
     public void onTestStart(ITestResult result){
-        String testName = result.getMethod().getMethodName();
+        String testName = result.getMethod().getMethodName()+"-"+result.getParameters()[0];
+        //String testName = result.getName();
 
         ExtentTest extentTest = extent.createTest(testName);
         ExtentTestManager.setTest(extentTest);
 
+        ExtentTestManager.getTest().info("Test started: "+testName);
         log.info("Test started: {}", testName);
     }
 
@@ -46,9 +50,11 @@ public class TestListener implements ITestListener {
     public void onTestSuccess(ITestResult result){
         String testName = result.getMethod().getMethodName();
 
-        ScreenShotUtil.takeScreenshot(result);
+        String screenshotPath = ScreenShotUtil.takeScreenshot(result);
 
-        ExtentTestManager.getTest().pass("Test passed");
+        ExtentTestManager.getTest().pass("Test passed").addScreenCaptureFromPath(screenshotPath);
+
+        ExtentTestManager.unload();
 
         log.info("Test passed: {}", testName);
     }
@@ -57,15 +63,12 @@ public class TestListener implements ITestListener {
     public void onTestFailure(ITestResult result){
         String testName = result.getMethod().getMethodName();
 
-        ScreenShotUtil.takeScreenshot(result);
+        String screenshotPath = ScreenShotUtil.takeScreenshot(result);
 
-        ExtentTestManager.getTest().fail(result.getThrowable());
+        ExtentTestManager.getTest().fail("Test failed: " +result.getThrowable()).addScreenCaptureFromPath(screenshotPath);
 
-        log.error("Test failed: {}", testName);
-
-        if (result.getThrowable() != null){
-            log.error("Failure reason:", result.getThrowable());
-        }
+        ExtentTestManager.unload();
+        log.error("Test failed: {}", testName, result.getThrowable());
     }
 
     @Override
@@ -74,7 +77,8 @@ public class TestListener implements ITestListener {
 
         ExtentTestManager.getTest().skip("Test skipped");
 
-        log.warn("Test failed: {}", testName);
+        ExtentTestManager.unload();
+        log.warn("Test skipped: {}", testName);
     }
 
     @Override

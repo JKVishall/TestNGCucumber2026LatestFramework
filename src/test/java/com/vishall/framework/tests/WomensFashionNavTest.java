@@ -1,7 +1,9 @@
 package com.vishall.framework.tests;
 
+import com.aventstack.extentreports.ExtentTest;
 import com.vishall.framework.base.BaseTest;
 import com.vishall.framework.pages.*;
+import com.vishall.framework.reports.ExtentTestManager;
 import com.vishall.framework.utils.DataProviderJson;
 import com.vishall.framework.utils.LoggersUtil;
 import org.apache.logging.log4j.Logger;
@@ -33,7 +35,10 @@ public class WomensFashionNavTest extends BaseTest {
     @Test(dataProvider="testDataForWomensFashionNavTest")
     public void addMaxCountOfProductToCart(HashMap<String, String> data){
         womensFashion = new WomensFashionNav();
+
         log.info("Navigating to women's fashion page");
+        ExtentTestManager.getTest().info("Navigating to women's fashion page");
+
         womensFashion.navToWomensFashion(data.get("FashionToSelect"));
 
         clickBrandName = new WomensFashionPage();
@@ -49,14 +54,18 @@ public class WomensFashionNavTest extends BaseTest {
 
         cart = new Cart();
         log.info("Doing assert to confirm if selected product is added");
+        ExtentTestManager.getTest().info("Doing assert to confirm if selected product is added");
 
         String expectedName = data.get("ProductName");
         String productNameRetrieved = cart.productAddedOrNot(expectedName);
 
         log.info("Actual result:" + productNameRetrieved);
+        ExtentTestManager.getTest().info("Actual result:" + productNameRetrieved);
         log.info("Expected result" + expectedName);
+        ExtentTestManager.getTest().info("Expected result:" + expectedName);
 
         Assert.assertTrue(productNameRetrieved.contains(expectedName), "Expected product is not present.\nExpected to contain: " + expectedName + "\nActual: " + productNameRetrieved);
+
     }
 
     @Test(dataProvider = "testDataForWomensFashionNavTest")
@@ -64,6 +73,8 @@ public class WomensFashionNavTest extends BaseTest {
 
         womensFashion = new WomensFashionNav();
         log.info("Navigating to women's fashion page");
+        ExtentTestManager.getTest().info("Navigating to women's fashion page");
+
         womensFashion.navToWomensFashion(data.get("FashionToSelect"));
 
         clickBrandName = new WomensFashionPage();
@@ -78,7 +89,10 @@ public class WomensFashionNavTest extends BaseTest {
         productPage.goToCart();
 
         cart = new Cart();
+
         log.info("Clicking on see more like this button and then waiting for see more like this menu to load fully inorder to take a better SS");
+        ExtentTestManager.getTest().info("Clicking on see more like this button and then waiting for see more like this menu to load fully inorder to take a better SS");
+
         cart.SeeMoreLikeThisBtn();
     }
 }
