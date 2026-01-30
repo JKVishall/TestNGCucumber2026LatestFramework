@@ -131,7 +131,7 @@
           <target>14</target>
         </configuration>
       </plugin>
-        <!-- SureFire plugin for TestNG and Cucumber -->
+        <!-- SureFire plugin for TestNG and Cucumber integration with CLI-->
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>

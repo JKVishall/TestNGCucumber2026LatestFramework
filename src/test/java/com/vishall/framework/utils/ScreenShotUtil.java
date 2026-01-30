@@ -17,7 +17,8 @@ public class ScreenShotUtil {
         if (driver != null) {
             try {
                 File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-                File dest = new File("screenshots/" + result.getMethod().getMethodName() + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss_SSS")) + ".png");
+                File dest = new File("screenshots/" + result.getMethod().getMethodName() +
+                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss_SSS")) + ".png");
                 FileUtils.copyFile(src, dest);
             } catch (Exception e) {
                 e.printStackTrace();
