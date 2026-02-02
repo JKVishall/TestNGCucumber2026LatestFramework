@@ -6,6 +6,11 @@
         <listener class-name="com.vishall.framework.listeners.TestListener"></listener>
     </listeners>
     <test name="Regression tests">
+        <groups>
+            <run>
+                <include name="regression"/>
+            </run>
+        </groups>
         <classes>
             <class name="com.vishall.framework.tests.WomensFashionNavTest"></class>
         </classes>

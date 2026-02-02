@@ -5,8 +5,14 @@
         <listener class-name="com.vishall.framework.listeners.TestListener"></listener>
     </listeners>-->
     <test name="Smoke tests">
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
         <classes>
             <class name="com.vishall.framework.tests.SmokeTest"></class>
+            <class name="com.vishall.framework.tests.WomensFashionNavTest"></class>
         </classes>
     </test>
 </suite>

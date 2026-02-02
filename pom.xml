@@ -136,10 +136,15 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <version>3.5.4</version>
+            <!--configuration is needed for sending -DConfiguredProperty in cli-->
+            <!--CLI only passes the -D properties we send to maven's sure fire plugin-->
+            <!--and in sure fire plugin, these properties needs to be configured as below-->
             <configuration>
                 <suiteXmlFiles>
-                    <!--suppress UnresolvedMavenProperty -->
+                    <!--for the below configuration suiteXmlFile, we just need to send
+                    -DsuiteXmlFile=testng.xml file name and surefire plugin will map it to existing file-->
                     <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+                    <!--file name from profiles will replace ${suiteXmlFile} and now surefire plugin will run this file-->
                 </suiteXmlFiles>
             </configuration>
         </plugin>
