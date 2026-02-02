@@ -15,6 +15,7 @@ public class BaseTest {
         //initializes the requested browser
         //sends the browser name to DriverFactory class from config.properties file
         DriverFactory.initialize_driver(ConfigReader.getProp("browser"));
+        //code for if browser should execute headless or not is created in DriverFactory class
 
         //opens url
         DriverFactory.getDriver().get(ConfigReader.getUrl());
