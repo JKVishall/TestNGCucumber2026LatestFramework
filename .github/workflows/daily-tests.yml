@@ -1,0 +1,68 @@
+name: Automation Tests
+
+on:
+  push:
+    branches:
+      #on push to branch -main
+      - main
+  schedule:
+     #run on schedule
+      - cron: "0 8 * * *" #Daily at 1 30 pm IST(08:00 UTC)
+     #workflow_dispatch for turing on the ability to manually trigger via github actions
+  workflow_dispatch:
+
+jobs:
+  automation-run:
+    name: Selenium Java automation
+    #run on ubuntu OS
+    runs-on: ubuntu-latest
+
+    #Run on the above mentioned OS and follow the below steps for execution
+    steps:
+      #Checks out main branch using version 4 of github actions checkout feature
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      #Once the above step of checking out repo is done, java will be setup
+      - name: then Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: then Setup Chrome
+        #setsup the latest chrome version
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Run the TestNG suite
+        run: mvn clean test -Pregression
+        #if needed we can change the profile to anything else we've setup in pom.xml
+        #we can even make it dynamic
+
+      #after our suite is run, artifacts(extent reports,screenshots and logs) will be generated,
+      #Using the below actions we can store them
+      - name: Upload Extent report
+        #if: always() means, this step will always happen no matter what happened before this step
+        #useful for storing reports, screenshots and logs even when whole test run or test cases fail/skipped
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extent-reports
+          path: test-output/
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: screenshots/
+
+      - name: Upload logs
+        if: always()
+        uses: actions-upload-artifact@v4
+        with:
+          name: logs
+          path: logs/
+
+#we can download the stored artifacts from Actions->Run->Artifacts
+
