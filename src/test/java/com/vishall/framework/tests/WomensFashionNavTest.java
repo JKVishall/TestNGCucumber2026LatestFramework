@@ -32,7 +32,7 @@ public class WomensFashionNavTest extends BaseTest {
     }
 
 
-    @Test(groups = {"smoke","regression"}, dataProvider="testDataForWomensFashionNavTest")
+    @Test(groups = "regression", dataProvider="testDataForWomensFashionNavTest")
     public void addMaxCountOfProductToCart(HashMap<String, String> data){
         womensFashion = new WomensFashionNav();
 
@@ -68,7 +68,7 @@ public class WomensFashionNavTest extends BaseTest {
 
     }
 
-    @Test(groups = {"regression"}, dataProvider = "testDataForWomensFashionNavTest")
+    @Test(dataProvider = "testDataForWomensFashionNavTest")
     public void moreLikeThisButtonInCartPage(HashMap<String,String> data) throws InterruptedException {
 
         womensFashion = new WomensFashionNav();
