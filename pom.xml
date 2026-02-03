@@ -18,7 +18,17 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
-      <version>4.25.0</version>
+      <version>4.35.0</version>
+        <exclusions>
+            <exclusion>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+            </exclusion>
+        </exclusions>
     </dependency>
     <!--  https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager  -->
     <dependency>
@@ -87,19 +97,77 @@
       <artifactId>cucumber-testng</artifactId>
       <version>7.29.0</version>
     </dependency>
-
-
+      <!-- Source: https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-api</artifactId>
+          <version>2.25.3</version>
+          <scope>compile</scope>
+      </dependency>
+      <!-- Source: https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-core</artifactId>
+          <version>2.25.3</version>
+          <scope>compile</scope>
+      </dependency>
+      <!-- Source: https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+          <version>2.25.3</version>
+          <scope>compile</scope>
+      </dependency>
   </dependencies>
+    
   <build>
     <plugins>
+        <!-- Java compiler -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>11</source>
-          <target>11</target>
+          <source>14</source>
+          <target>14</target>
         </configuration>
       </plugin>
+        <!-- SureFire plugin for TestNG and Cucumber integration with CLI-->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.5.4</version>
+            <!--configuration is needed for sending -DConfiguredProperty in cli-->
+            <!--CLI only passes the -D properties we send to maven's sure fire plugin-->
+            <!--and in sure fire plugin, these properties needs to be configured as below-->
+            <configuration>
+                <suiteXmlFiles>
+                    <!--for the below configuration suiteXmlFile, we just need to send
+                    -DsuiteXmlFile=testng.xml file name and surefire plugin will map it to existing file-->
+                    <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+                    <!--file name from profiles will replace ${suiteXmlFile} and now surefire plugin will run this file-->
+                </suiteXmlFiles>
+            </configuration>
+        </plugin>
     </plugins>
   </build>
+
+    <profiles>
+        <profile>
+            <id>smoke</id>
+            <properties>
+                    <suiteXmlFile>testng-smoke.xml</suiteXmlFile>
+            </properties>
+            <!-- activation helps in setting a default profile which should run with mvn clean test command
+            No, -P or -D is required -->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>regression</id>
+            <properties>
+                    <suiteXmlFile>testng-regression.xml</suiteXmlFile>
+            </properties>
+        </profile>
+    </profiles>
 </project>

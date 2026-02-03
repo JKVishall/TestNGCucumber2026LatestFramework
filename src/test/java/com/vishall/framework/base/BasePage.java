@@ -55,19 +55,19 @@ public class BasePage {
         find(locator).sendKeys(Keys.ENTER);
     }
 
-    //custom built method
+    //custom built method for WomensFashionPage class
     //click on an element using
-    protected void clickUsingBrandName(String brandName){
-        By brandNameElement = By.xpath("//a[.//img[contains(@src,'"+brandName+"')]]");
-        click(brandNameElement);
-    }
+//    protected void clickUsingBrandName(String brandName){
+//        By brandNameElement = By.xpath("//a[.//img[contains(@src,'"+brandName+"')]]");
+//        click(brandNameElement);
+//    }
 
-    //custom built method
+    //custom built method for SelectedBrandsPage class
     //
-    protected void clickUsingProductName(String productName){
-        By productNameElement = By.xpath("//a[.//h2[@aria-label='"+productName+"']]");
-        click(productNameElement);
-    }
+//    protected void clickUsingProductName(String productName){
+//        By productNameElement = By.xpath("//a[.//h2[@aria-label='"+productName+"']]");
+//        click(productNameElement);
+//    }
 
     //sendkeys
     protected void type(By locator, String text){
@@ -144,7 +144,8 @@ public class BasePage {
         for (String k: allWindows){
             windowsNames.add(k);
         }
-        DriverFactory.getDriver().switchTo().window(windowsNames.get(1));
+        int windowsCount = windowsNames.size();
+        DriverFactory.getDriver().switchTo().window(windowsNames.get(windowsCount-1));
     }
 
     protected void goToCartBtnUniversal(){

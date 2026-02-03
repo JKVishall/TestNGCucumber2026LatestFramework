@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Regression Suite" parallel="tests" thread-count="2">
+    <listeners>
+        <listener class-name="com.vishall.framework.retry.RetryTransformer"></listener>
+        <listener class-name="com.vishall.framework.listeners.TestListener"></listener>
+    </listeners>
+    <test name="Regression tests">
+        <groups>
+            <run>
+                <include name="regression"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.vishall.framework.tests.WomensFashionNavTest"></class>
+        </classes>
+    </test>
+    <!--test name ="smoke tests">
+        <classes>
+            <class name="com.vishall.framework.tests.SmokeTest"></class>
+        </classes>
+    </test-->
+</suite>
